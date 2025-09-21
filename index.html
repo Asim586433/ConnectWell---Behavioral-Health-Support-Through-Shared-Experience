@@ -123,6 +123,26 @@
             margin: 0 auto;
         }
 
+        /* Page container for multi-page functionality */
+        .page-container {
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         /* Accessibility */
         .sr-only {
             position: absolute;
@@ -196,10 +216,16 @@
         .nav-link {
             color: var(--dark);
             font-weight: 500;
+            cursor: pointer;
         }
 
         .nav-link:hover, .nav-link:focus {
             color: var(--primary);
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+            font-weight: 600;
         }
 
         .mobile-toggle {
@@ -213,7 +239,7 @@
 
         /* Hero Section */
         .hero {
-            padding: 8rem 0 5rem;
+            padding: 4rem 0 5rem;
             background: linear-gradient(135deg, #f7f9fc 0%, #edf2f7 100%);
         }
 
@@ -362,7 +388,7 @@
         }
 
         .accordion-item.active .accordion-content {
-            max-height: 300px;
+            max-height: 500px;
         }
 
         /* Contact Section */
@@ -415,6 +441,67 @@
             box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
         }
 
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .team-member {
+            text-align: center;
+        }
+
+        .team-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        /* Blog/Articles Section */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .article-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .article-image {
+            height: 180px;
+        }
+
+        .article-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .article-content {
+            padding: 1.5rem;
+        }
+
+        .article-meta {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* FAQ Section */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
         /* Footer */
         footer {
             background: var(--dark);
@@ -445,6 +532,7 @@
 
         .footer-links a {
             color: #ccc;
+            cursor: pointer;
         }
 
         .footer-links a:hover, .footer-links a:focus {
@@ -484,12 +572,16 @@
 
         /* Responsive Design */
         @media (max-width: 992px) {
-            .features-grid {
+            .features-grid, .team-grid, .articles-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
             
             .footer-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .faq-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -537,7 +629,7 @@
         }
 
         @media (max-width: 576px) {
-            .features-grid {
+            .features-grid, .team-grid, .articles-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -580,199 +672,762 @@
             
             <nav>
                 <ul class="nav-menu">
-                    <li class="nav-item"><a href="#home" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
-                    <li class="nav-item"><a href="#stories" class="nav-link">Stories</a></li>
-                    <li class="nav-item"><a href="#resources" class="nav-link">Resources</a></li>
-                    <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
-                    <li class="nav-item"><a href="#login" class="btn btn-secondary">Login</a></li>
+                    <li class="nav-item"><a class="nav-link active" data-page="home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page="about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page="resources">Resources</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page="stories">Stories</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page="contact">Contact</a></li>
+                    <li class="nav-item"><a class="btn btn-secondary" data-page="login">Login</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main id="main-content">
-        <!-- Hero Section -->
-        <section id="home" class="hero">
-            <div class="container hero-container">
-                <div class="hero-content">
-                    <h1>Healing through shared experience</h1>
-                    <p>ConnectWell is a supportive community where individuals facing behavioral health challenges can find understanding, resources, and hope through connection with others who have walked similar paths.</p>
-                    <div class="hero-buttons">
-                        <a href="#join" class="btn">Join Our Community</a>
-                        <a href="#learn-more" class="btn btn-secondary">Learn More</a>
+    <!-- Main Content Container -->
+    <main id="main-content" class="page-container">
+        <!-- Home Page -->
+        <div id="home-page" class="page active">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="container hero-container">
+                    <div class="hero-content">
+                        <h1>Healing through shared experience</h1>
+                        <p>ConnectWell is a supportive community where individuals facing behavioral health challenges can find understanding, resources, and hope through connection with others who have walked similar paths.</p>
+                        <div class="hero-buttons">
+                            <a class="btn" data-page="signup">Join Our Community</a>
+                            <a class="btn btn-secondary" data-page="about">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Diverse group of people supporting each other in a circle">
                     </div>
                 </div>
-                <div class="hero-image">
-                    <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Diverse group of people supporting each other in a circle">
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Features Section -->
-        <section id="about" class="section">
-            <div class="container">
-                <div class="section-title">
-                    <h2>How We Support You</h2>
-                    <p>Our community-driven approach focuses on connection, understanding, and growth</p>
-                </div>
-                
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <h3>Peer Support Networks</h3>
-                        <p>Connect with others who truly understand your experience through our carefully matched peer support program.</p>
+            <!-- Features Section -->
+            <section class="section">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>How We Support You</h2>
+                        <p>Our community-driven approach focuses on connection, understanding, and growth</p>
                     </div>
                     
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-hand-holding-heart"></i>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3>Peer Support Networks</h3>
+                            <p>Connect with others who truly understand your experience through our carefully matched peer support program.</p>
                         </div>
-                        <h3>Expert Guidance</h3>
-                        <p>Access resources and guidance from mental health professionals who specialize in lived experience approaches.</p>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-hand-holding-heart"></i>
+                            </div>
+                            <h3>Expert Guidance</h3>
+                            <p>Access resources and guidance from mental health professionals who specialize in lived experience approaches.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <h3>Weekly Groups</h3>
+                            <p>Join our regular virtual and in-person support groups focused on specific challenges and recovery journeys.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stories Preview Section -->
+            <section class="section stories">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Stories of Hope & Recovery</h2>
+                        <p>Real experiences from members of our community</p>
                     </div>
                     
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-calendar-check"></i>
+                    <div class="stories-grid">
+                        <div class="story-card">
+                            <div class="story-image">
+                                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sarah, a young woman smiling">
+                            </div>
+                            <div class="story-content">
+                                <h3>Sarah's Journey</h3>
+                                <p>"Finding others who understood my anxiety changed everything. I no longer feel alone in my struggles."</p>
+                                <a data-page="stories">Read more</a>
+                            </div>
                         </div>
-                        <h3>Weekly Groups</h3>
-                        <p>Join our regular virtual and in-person support groups focused on specific challenges and recovery journeys.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Stories Section -->
-        <section id="stories" class="section stories">
-            <div class="container">
-                <div class="section-title">
-                    <h2>Stories of Hope & Recovery</h2>
-                    <p>Real experiences from members of our community</p>
-                </div>
-                
-                <div class="stories-grid">
-                    <div class="story-card">
-                        <div class="story-image">
-                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sarah, a young woman smiling">
-                        </div>
-                        <div class="story-content">
-                            <h3>Sarah's Journey</h3>
-                            <p>"Finding others who understood my anxiety changed everything. I no longer feel alone in my struggles."</p>
-                            <a href="#sarah-story">Read more</a>
-                        </div>
-                    </div>
-                    
-                    <div class="story-card">
-                        <div class="story-image">
-                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Michael, a man outdoors">
-                        </div>
-                        <div class="story-content">
-                            <h3>Michael's Recovery</h3>
-                            <p>"The shared experience group gave me tools and hope when I needed it most. Today I'm two years in recovery."</p>
-                            <a href="#michael-story">Read more</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Resources Section -->
-        <section id="resources" class="section">
-            <div class="container">
-                <div class="section-title">
-                    <h2>Resources & Information</h2>
-                    <p>Helpful materials for your wellness journey</p>
-                </div>
-                
-                <div class="resources-accordion">
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Crisis Resources</span>
-                            <i class="fas fa-plus"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="accordion-content-inner">
-                                <p>If you're in crisis, please reach out immediately:</p>
-                                <ul>
-                                    <li>National Suicide Prevention Lifeline: 988</li>
-                                    <li>Crisis Text Line: Text HOME to 741741</li>
-                                    <li>Emergency: 911</li>
-                                </ul>
+                        
+                        <div class="story-card">
+                            <div class="story-image">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Michael, a man outdoors">
+                            </div>
+                            <div class="story-content">
+                                <h3>Michael's Recovery</h3>
+                                <p>"The shared experience group gave me tools and hope when I needed it most. Today I'm two years in recovery."</p>
+                                <a data-page="stories">Read more</a>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Self-Care Strategies</span>
-                            <i class="fas fa-plus"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="accordion-content-inner">
-                                <p>Effective self-care practices recommended by our community:</p>
-                                <ul>
-                                    <li>Mindfulness and meditation techniques</li>
-                                    <li>Physical activity guidelines</li>
-                                    <li>Sleep hygiene recommendations</li>
-                                    <li>Nutrition for mental wellness</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Community Guidelines</span>
-                            <i class="fas fa-plus"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="accordion-content-inner">
-                                <p>Our community is built on respect, empathy, and confidentiality:</p>
-                                <ul>
-                                    <li>Respect everyone's journey and experiences</li>
-                                    <li>Maintain confidentiality - what's shared here stays here</li>
-                                    <li>Offer support without judgment</li>
-                                    <li>Practice active listening and empathy</li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <a class="btn" data-page="stories">View All Stories</a>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="section contact">
-            <div class="container">
-                <div class="section-title">
-                    <h2>Get In Touch</h2>
-                    <p>Reach out to learn more or join our community</p>
+            <!-- Resources Preview Section -->
+            <section class="section">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Resources & Information</h2>
+                        <p>Helpful materials for your wellness journey</p>
+                    </div>
+                    
+                    <div class="resources-accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Crisis Resources</span>
+                                <i class="fas fa-plus"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="accordion-content-inner">
+                                    <p>If you're in crisis, please reach out immediately:</p>
+                                    <ul>
+                                        <li>National Suicide Prevention Lifeline: 988</li>
+                                        <li>Crisis Text Line: Text HOME to 741741</li>
+                                        <li>Emergency: 911</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Self-Care Strategies</span>
+                                <i class="fas fa-plus"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="accordion-content-inner">
+                                    <p>Effective self-care practices recommended by our community:</p>
+                                    <ul>
+                                        <li>Mindfulness and meditation techniques</li>
+                                        <li>Physical activity guidelines</li>
+                                        <li>Sleep hygiene recommendations</li>
+                                        <li>Nutrition for mental wellness</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <a class="btn" data-page="resources">Explore All Resources</a>
+                    </div>
                 </div>
-                
-                <form class="contact-form">
-                    <div class="form-group">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" id="name" class="form-input" required>
+            </section>
+        </div>
+
+        <!-- About Page -->
+        <div id="about-page" class="page">
+            <section class="section">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>About ConnectWell</h2>
+                        <p>Our mission is to create a supportive community where healing happens through shared experiences</p>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" id="email" class="form-input" required>
+                    <div class="hero-container">
+                        <div class="hero-content">
+                            <h2>Our Story</h2>
+                            <p>Founded in 2018, ConnectWell began as a small peer support group meeting in community centers. Today, we've grown into a comprehensive behavioral health support organization serving thousands of members across the country.</p>
+                            <p>Our approach is unique—we believe that those with lived experience with mental health challenges are uniquely positioned to support others on similar journeys. All our programs are designed and facilitated by individuals who have personal experience with behavioral health recovery.</p>
+                        </div>
+                        <div class="hero-image">
+                            <img src="https://images.unsplash.com/photo-1515168833906-d2a3b82b3029?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Group of people sitting in a circle talking">
+                        </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="message" class="form-label">Message</label>
-                        <textarea id="message" class="form-textarea" required></textarea>
+                    <div class="section-title" style="margin-top: 4rem;">
+                        <h2>Our Team</h2>
+                        <p>Dedicated professionals with lived experience</p>
                     </div>
                     
-                    <button type="submit" class="btn">Send Message</button>
-                </form>
-            </div>
-        </section>
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Dr. Maria Rodriguez" class="team-image">
+                            <h3>Dr. Maria Rodriguez</h3>
+                            <p>Clinical Director</p>
+                        </div>
+                        
+                        <div class="team-member">
+                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="James Wilson" class="team-image">
+                            <h3>James Wilson</h3>
+                            <p>Peer Support Coordinator</p>
+                        </div>
+                        
+                        <div class="team-member">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Sarah Johnson" class="team-image">
+                            <h3>Sarah Johnson</h3>
+                            <p>Community Outreach Manager</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="section stories">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Our Approach</h2>
+                        <p>How we create meaningful support through shared experience</p>
+                    </div>
+                    
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <h3>Peer Matching</h3>
+                            <p>We carefully match individuals based on shared experiences, needs, and goals to create meaningful support relationships.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3>Safe Environment</h3>
+                            <p>All interactions happen in a safe, moderated environment with trained facilitators to ensure respectful communication.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h3>Continuous Training</h3>
+                            <p>Our peer supporters receive ongoing training in effective communication, boundary setting, and crisis response.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Resources Page -->
+        <div id="resources-page" class="page">
+            <section class="section">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Resources & Support</h2>
+                        <p>Tools and information to support your mental health journey</p>
+                    </div>
+                    
+                    <div class="resources-accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Crisis Resources</span>
+                                <i class="fas fa-plus"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="accordion-content-inner">
+                                    <p>If you're in crisis, please reach out immediately:</p>
+                                    <ul>
+                                        <li><strong>National Suicide Prevention Lifeline:</strong> 988</li>
+                                        <li><strong>Crisis Text Line:</strong> Text HOME to 741741</li>
+                                        <li><strong>Emergency:</strong> 911</li>
+                                        <li><strong>Substance Abuse and Mental Health Services Administration (SAMHSA) Helpline:</strong> 1-800-662-4357</li>
+                                        <li><strong>National Domestic Violence Hotline:</strong> 1-800-799-7233</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Self-Care Strategies</span>
+                                <i class="fas fa-plus"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="accordion-content-inner">
+                                    <p>Effective self-care practices recommended by our community:</p>
+                                    <ul>
+                                        <li><strong>Mindfulness and meditation:</strong> Practice daily meditation, even for just 5-10 minutes</li>
+                                        <li><strong>Physical activity:</strong> Aim for 30 minutes of moderate exercise most days</li>
+                                        <li><strong>Sleep hygiene:</strong> Maintain a consistent sleep schedule and create a restful environment</li>
+                                        <li><strong>Nutrition:</strong> Eat balanced meals and stay hydrated</li>
+                                        <li><strong>Digital detox:</strong> Take regular breaks from screens and social media</li>
+                                        <li><strong>Gratitude practice:</strong> Keep a journal of things you're thankful for</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Therapy Options</span>
+                                <i class="fas fa-plus"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="accordion-content-inner">
+                                    <p>Various therapeutic approaches that may help:</p>
+                                    <ul>
+                                        <li><strong>Cognitive Behavioral Therapy (CBT):</strong> Focuses on identifying and changing negative thought patterns</li>
+                                        <li><strong>Dialectical Behavior Therapy (DBT):</strong> Teaches skills to manage emotions and improve relationships</li>
+                                        <li><strong>Group Therapy:</strong> Provides support from others facing similar challenges</li>
+                                        <li><strong>Family Therapy:</strong> Involves family members in the treatment process</li>
+                                        <li><strong>Art and Music Therapy:</strong> Creative approaches to expression and healing</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Community Guidelines</span>
+                                <i class="fas fa-plus"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="accordion-content-inner">
+                                    <p>Our community is built on respect, empathy, and confidentiality:</p>
+                                    <ul>
+                                        <li>Respect everyone's journey and experiences</li>
+                                        <li>Maintain confidentiality - what's shared here stays here</li>
+                                        <li>Offer support without judgment or unsolicited advice</li>
+                                        <li>Practice active listening and empathy</li>
+                                        <li>Use "I" statements to share your experiences</li>
+                                        <li>Respect boundaries and personal space</li>
+                                        <li>Be mindful of triggering content and use content warnings when needed</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="section stories">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Helpful Articles</h2>
+                        <p>Educational content to support your mental health journey</p>
+                    </div>
+                    
+                    <div class="articles-grid">
+                        <div class="article-card">
+                            <div class="article-image">
+                                <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Person meditating">
+                            </div>
+                            <div class="article-content">
+                                <div class="article-meta">April 12, 2023 • Mindfulness</div>
+                                <h3>5 Mindfulness Techniques for Anxiety</h3>
+                                <p>Simple practices you can incorporate into your daily routine to manage anxiety symptoms.</p>
+                                <a href="#">Read more</a>
+                            </div>
+                        </div>
+                        
+                        <div class="article-card">
+                            <div class="article-image">
+                                <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="People doing yoga">
+                            </div>
+                            <div class="article-content">
+                                <div class="article-meta">March 28, 2023 • Self-Care</div>
+                                <h3>Building a Sustainable Self-Care Routine</h3>
+                                <p>How to create self-care practices that fit your life and support long-term wellness.</p>
+                                <a href="#">Read more</a>
+                            </div>
+                        </div>
+                        
+                        <div class="article-card">
+                            <div class="article-image">
+                                <img src="https://images.unsplash.com/photo-1599842057874-37393e9342df?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt Support group meeting">
+                            </div>
+                            <div class="article-content">
+                                <div class="article-meta">March 15, 2023 • Community</div>
+                                <h3>The Power of Shared Experience in Healing</h3>
+                                <p>Why connecting with others who have similar experiences can accelerate recovery.</p>
+                                <a href="#">Read more</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Stories Page -->
+        <div id="stories-page" class="page">
+            <section class="section">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Stories of Hope & Recovery</h2>
+                        <p>Real experiences from members of our community</p>
+                    </div>
+                    
+                    <div class="stories-grid">
+                        <div class="story-card">
+                            <div class="story-image">
+                                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sarah, a young woman smiling">
+                            </div>
+                            <div class="story-content">
+                                <h3>Sarah's Journey with Anxiety</h3>
+                                <p class="article-meta">Posted: April 5, 2023</p>
+                                <p>"Finding others who understood my anxiety changed everything. For years I felt isolated in my struggles, but through ConnectWell I found a community that truly gets it. The peer support program matched me with Jessica, who had similar experiences. Learning her coping strategies and having someone to talk to who wouldn't judge me made all the difference."</p>
+                                <a href="#">Read full story</a>
+                            </div>
+                        </div>
+                        
+                        <div class="story-card">
+                            <div class="story-image">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Michael, a man outdoors">
+                            </div>
+                            <div class="story-content">
+                                <h3>Michael's Recovery Journey</h3>
+                                <p class="article-meta">Posted: March 22, 2023</p>
+                                <p>"The shared experience group gave me tools and hope when I needed it most. After my diagnosis, I felt lost and uncertain about the future. Connecting with others who were further along in their recovery showed me that healing was possible. Today I'm two years in recovery and recently became a peer supporter to help others."</p>
+                                <a href="#">Read full story</a>
+                            </div>
+                        </div>
+                        
+                        <div class="story-card">
+                            <div class="story-image">
+                                <img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Aisha, a woman smiling">
+                            </div>
+                            <div class="story-content">
+                                <h3>Aisha's Path to Self-Acceptance</h3>
+                                <p class="article-meta">Posted: March 10, 2023</p>
+                                <p>"Growing up, I never saw people who looked like me talking about mental health. Through ConnectWell, I found a diverse community that helped me embrace my identity while working on my mental wellness. The cultural sensitivity of the facilitators made me feel seen and understood in ways I hadn't experienced before."</p>
+                                <a href="#">Read full story</a>
+                            </div>
+                        </div>
+                        
+                        <div class="story-card">
+                            <div class="story-image">
+                                <img src="https://images.unsplash.com/photo-1567532939604-b6b5b0db1604?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="David, a man sitting in a park">
+                            </div>
+                            <div class="story-content">
+                                <h3>David's Depression Recovery</h3>
+                                <p class="article-meta">Posted: February 18, 2023</p>
+                                <p>"For years, I struggled with depression in silence. I thought seeking help was a sign of weakness. ConnectWell's approach of shared experience helped me understand that my struggles were valid and that asking for help was actually a strength. The combination of professional guidance and peer support created a comprehensive approach to my recovery."</p>
+                                <a href="#">Read full story</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="section contact">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Share Your Story</h2>
+                        <p>Your experience could help others on their journey</p>
+                    </div>
+                    
+                    <div class="contact-form">
+                        <form id="story-form">
+                            <div class="form-group">
+                                <label for="story-name" class="form-label">Name (optional)</label>
+                                <input type="text" id="story-name" class="form-input">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="story-email" class="form-label">Email (optional)</label>
+                                <input type="email" id="story-email" class="form-input">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="story-title" class="form-label">Story Title</label>
+                                <input type="text" id="story-title" class="form-input" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="story-content" class="form-label">Your Story</label>
+                                <textarea id="story-content" class="form-textarea" required></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <input type="checkbox" required> I understand that my story may be shared anonymously to help others
+                                </label>
+                            </div>
+                            
+                            <button type="submit" class="btn">Submit Story</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contact-page" class="page">
+            <section class="section">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Contact Us</h2>
+                        <p>Reach out to learn more or join our community</p>
+                    </div>
+                    
+                    <div class="hero-container">
+                        <div class="hero-content">
+                            <h2>Get In Touch</h2>
+                            <p>We're here to answer any questions you might have about our programs, resources, or how to get involved. Our team typically responds within 24-48 hours.</p>
+                            
+                            <div class="feature-card" style="text-align: left; margin-top: 2rem;">
+                                <h3><i class="fas fa-envelope"></i> Email Us</h3>
+                                <p>support@connectwell.org</p>
+                            </div>
+                            
+                            <div class="feature-card" style="text-align: left; margin-top: 1rem;">
+                                <h3><i class="fas fa-phone"></i> Call Us</h3>
+                                <p>(555) 123-4567</p>
+                                <p>Monday-Friday, 9am-5pm EST</p>
+                            </div>
+                            
+                            <div class="feature-card" style="text-align: left; margin-top: 1rem;">
+                                <h3><i class="fas fa-map-marker-alt"></i> Visit Us</h3>
+                                <p>123 Wellness Street<br>City, State 12345</p>
+                            </div>
+                        </div>
+                        
+                        <div class="hero-image">
+                            <div class="contact-form">
+                                <form id="contact-form">
+                                    <div class="form-group">
+                                        <label for="name" class="form-label">Name</label>
+                                        <input type="text" id="name" class="form-input" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" id="email" class="form-input" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="subject" class="form-label">Subject</label>
+                                        <select id="subject" class="form-input" required>
+                                            <option value="">Select a topic</option>
+                                            <option value="general">General Inquiry</option>
+                                            <option value="support">Peer Support</option>
+                                            <option value="volunteer">Volunteering</option>
+                                            <option value="donation">Donation</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="message" class="form-label">Message</label>
+                                        <textarea id="message" class="form-textarea" required></textarea>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn">Send Message</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="section stories">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Frequently Asked Questions</h2>
+                        <p>Common questions about our programs and services</p>
+                    </div>
+                    
+                    <div class="faq-grid">
+                        <div class="resources-accordion">
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span>How do I join ConnectWell?</span>
+                                    <i class="fas fa-plus"></i>
+                                </div>
+                                <div class="accordion-content">
+                                    <div class="accordion-content-inner">
+                                        <p>Joining ConnectWell is simple. You can sign up through our website by clicking the "Join Our Community" button. Once registered, you'll be asked to complete a brief profile to help us match you with appropriate resources and peer supporters. There's no cost to join our basic community programs.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span>Is there a cost for your services?</span>
+                                    <i class="fas fa-plus"></i>
+                                </div>
+                                <div class="accordion-content">
+                                    <div class="accordion-content-inner">
+                                        <p>Many of our services are free, including peer support matching, community forums, and educational resources. We also offer premium programs with additional features for a monthly subscription fee. We believe in accessibility, so financial assistance is available for those who need it.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span>Are your peer supporters trained?</span>
+                                    <i class="fas fa-plus"></i>
+                                </div>
+                                <div class="accordion-content">
+                                    <div class="accordion-content-inner">
+                                        <p>Yes, all our peer supporters complete a comprehensive training program that covers active listening, boundary setting, crisis response, and ethical guidelines. Many of our peer supporters also have professional mental health credentials in addition to their lived experience.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="resources-accordion">
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span>Is my information kept confidential?</span>
+                                    <i class="fas fa-plus"></i>
+                                </div>
+                                <div class="accordion-content">
+                                    <div class="accordion-content-inner">
+                                        <p>Yes, we take privacy and confidentiality very seriously. Your personal information and what you share in support sessions is kept confidential, with exceptions only as required by law (such as risk of harm to self or others). We use secure, encrypted platforms for all our communications.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span>How are peer matches made?</span>
+                                    <i class="fas fa-plus"></i>
+                                </div>
+                                <div class="accordion-content">
+                                    <div class="accordion-content-inner">
+                                        <p>We use a careful matching process that considers your specific experiences, needs, preferences, and goals. Our algorithm suggests potential matches, which are then reviewed by our team before being presented to you. You always have the final say in who you're matched with.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <span>Can I become a peer supporter?</span>
+                                    <i class="fas fa-plus"></i>
+                                </div>
+                                <div class="accordion-content">
+                                    <div class="accordion-content-inner">
+                                        <p>We're always looking for compassionate individuals with lived experience to join our peer support team. Requirements include at least two years in recovery/stability, completion of our training program, and a commitment to our community guidelines. Contact us to learn more about the application process.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Login Page -->
+        <div id="login-page" class="page">
+            <section class="section">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Login to Your Account</h2>
+                        <p>Access your support community and resources</p>
+                    </div>
+                    
+                    <div class="hero-container">
+                        <div class="hero-image">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Person smiling while using laptop">
+                        </div>
+                        
+                        <div class="hero-content">
+                            <div class="contact-form">
+                                <form id="login-form">
+                                    <div class="form-group">
+                                        <label for="login-email" class="form-label">Email</label>
+                                        <input type="email" id="login-email" class="form-input" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="login-password" class="form-label">Password</label>
+                                        <input type="password" id="login-password" class="form-input" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            <input type="checkbox"> Remember me
+                                        </label>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn" style="width: 100%;">Login</button>
+                                    
+                                    <div style="text-align: center; margin-top: 1rem;">
+                                        <a href="#" style="font-size: 0.9rem;">Forgot password?</a>
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            <div style="text-align: center; margin-top: 2rem;">
+                                <p>Don't have an account? <a data-page="signup" style="cursor: pointer; font-weight: 500;">Sign up here</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Signup Page -->
+        <div id="signup-page" class="page">
+            <section class="section">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Join Our Community</h2>
+                        <p>Become part of our supportive network</p>
+                    </div>
+                    
+                    <div class="hero-container">
+                        <div class="hero-content">
+                            <div class="contact-form">
+                                <form id="signup-form">
+                                    <div class="form-group">
+                                        <label for="signup-name" class="form-label">Full Name</label>
+                                        <input type="text" id="signup-name" class="form-input" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="signup-email" class="form-label">Email</label>
+                                        <input type="email" id="signup-email" class="form-input" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="signup-password" class="form-label">Password</label>
+                                        <input type="password" id="signup-password" class="form-input" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="signup-confirm" class="form-label">Confirm Password</label>
+                                        <input type="password" id="signup-confirm" class="form-input" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            <input type="checkbox" required> I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                                        </label>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn" style="width: 100%;">Create Account</button>
+                                </form>
+                            </div>
+                            
+                            <div style="text-align: center; margin-top: 2rem;">
+                                <p>Already have an account? <a data-page="login" style="cursor: pointer; font-weight: 500;">Login here</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="hero-image">
+                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Diverse group of people connected in community">
+                            <div class="feature-card" style="margin-top: 2rem;">
+                                <h3>Why Join ConnectWell?</h3>
+                                <ul style="text-align: left; padding-left: 1.5rem;">
+                                    <li>Connect with understanding peers</li>
+                                    <li>Access exclusive resources</li>
+                                    <li>Join supportive communities</li>
+                                    <li>Participate in group sessions</li>
+                                    <li>Share experiences safely</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
     </main>
 
     <!-- Footer -->
@@ -793,21 +1448,22 @@
                 <div class="footer-column">
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#stories">Stories</a></li>
-                        <li><a href="#resources">Resources</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a data-page="home">Home</a></li>
+                        <li><a data-page="about">About</a></li>
+                        <li><a data-page="resources">Resources</a></li>
+                        <li><a data-page="stories">Stories</a></li>
+                        <li><a data-page="contact">Contact</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-column">
                     <h3>Resources</h3>
                     <ul class="footer-links">
-                        <li><a href="#blog">Blog</a></li>
-                        <li><a href="#faq">FAQ</a></li>
-                        <li><a href="#support-groups">Support Groups</a></li>
-                        <li><a href="#crisis-resources">Crisis Resources</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Support Groups</a></li>
+                        <li><a href="#">Crisis Resources</a></li>
+                        <li><a href="#">Self-Care Tools</a></li>
                     </ul>
                 </div>
                 
@@ -822,7 +1478,7 @@
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2023 ConnectWell. All rights reserved. | <a href="#privacy">Privacy Policy</a> | <a href="#terms">Terms of Service</a></p>
+                <p>&copy; 2023 ConnectWell. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
             </div>
         </div>
     </footer>
@@ -845,22 +1501,76 @@
         accordionHeaders.forEach(header => {
             header.addEventListener('click', function() {
                 const accordionItem = this.parentNode;
-                accordionItem.classList.toggle('active');
+                const isActive = accordionItem.classList.contains('active');
+                
+                // Close all accordion items
+                document.querySelectorAll('.accordion-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Open clicked item if it wasn't already active
+                if (!isActive) {
+                    accordionItem.classList.add('active');
+                }
             });
         });
         
         // Form submission
-        const contactForm = document.querySelector('.contact-form');
+        const forms = document.querySelectorAll('form');
         
-        if (contactForm) {
-            contactForm.addEventListener('submit', function(e) {
+        forms.forEach(form => {
+            form.addEventListener('submit', function(e) {
                 e.preventDefault();
-                alert('Thank you for your message. We will be in touch soon.');
+                alert('Thank you for your submission. This is a demonstration website, so your information has not been actually sent.');
                 this.reset();
             });
+        });
+        
+        // Multi-page navigation functionality
+        const pages = document.querySelectorAll('.page');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pageLinks = document.querySelectorAll('[data-page]');
+        
+        function showPage(pageId) {
+            // Hide all pages
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            const targetPage = document.getElementById(`${pageId}-page`);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+            
+            // Update active navigation link
+            navLinks.forEach(link => {
+                if (link.getAttribute('data-page') === pageId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+            
+            // Close mobile menu if open
+            if (navMenu.classList.contains('active')) {
+                mobileToggle.setAttribute('aria-expanded', 'false');
+                navMenu.classList.remove('active');
+            }
         }
         
-        // Smooth scrolling for navigation links
+        // Add click event to all page links
+        pageLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                const pageId = this.getAttribute('data-page');
+                showPage(pageId);
+            });
+        });
+        
+        // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -877,12 +1587,6 @@
                         top: targetPosition,
                         behavior: 'smooth'
                     });
-                    
-                    // Close mobile menu if open
-                    if (navMenu.classList.contains('active')) {
-                        mobileToggle.setAttribute('aria-expanded', 'false');
-                        navMenu.classList.remove('active');
-                    }
                 }
             });
         });
